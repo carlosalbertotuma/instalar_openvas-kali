@@ -2,6 +2,26 @@
 ## devido a dificuldade de instalar o openvas com os comandos da documentação foi elaborado esse script para automatizar o processo. ###
 ## By Carlos Tuma - bl4dsc4n
 
+## Instando o Openvas no Kali linux:
+
+banner(){
+echo
+echo "    ███████                                                                           █████   ████           ████   ███ "
+echo "  ███░░░░░███                                                                        ░░███   ███░           ░░███  ░░░  "
+echo " ███     ░░███ ████████   ██████  ████████   █████ █████  ██████    █████             ░███  ███     ██████   ░███  ████ "
+echo "░███      ░███░░███░░███ ███░░███░░███░░███ ░░███ ░░███  ░░░░░███  ███░░   ██████████ ░███████     ░░░░░███  ░███ ░░███ "
+echo "░███      ░███ ░███ ░███░███████  ░███ ░███  ░███  ░███   ███████ ░░█████ ░░░░░░░░░░  ░███░░███     ███████  ░███  ░███ "
+echo "░░███     ███  ░███ ░███░███░░░   ░███ ░███  ░░███ ███   ███░░███  ░░░░███            ░███ ░░███   ███░░███  ░███  ░███ "
+echo " ░░░███████░   ░███████ ░░██████  ████ █████  ░░█████   ░░████████ ██████             █████ ░░████░░████████ █████ █████"
+echo "   ░░░░░░░     ░███░░░   ░░░░░░  ░░░░ ░░░░░    ░░░░░     ░░░░░░░░ ░░░░░░             ░░░░░   ░░░░  ░░░░░░░░ ░░░░░ ░░░░░ "
+echo "               ░███                                                                                                     "
+echo "               █████                                                                                                    "
+echo "              ░░░░░                                                                                                     "
+echo
+echo " By Carlos Tuma - Bl4dsc4n - v 0.1"
+}
+
+banner       
 
 set -e
 
@@ -14,6 +34,17 @@ if [[ "$EUID" -ne 0 ]]; then
     echo "Por favor, execute como root ou com sudo."
     exit 1
 fi
+
+
+log "Atualizando o repositório do kali.."
+apt update
+   
+log "Atualizar o sistema.."
+apt upgrade -y
+apt dist-upgrade -y
+ 
+log "Instalar o openvas.."
+apt install openvas
 
 log "Verificando clusters PostgreSQL existentes..."
 pg_lsclusters
@@ -63,3 +94,9 @@ pg_lsclusters
 
 log "Executando gvm-setup..."
 sudo gvm-setup
+
+log "Checar as configurações de setup.."
+sudo gvm-check-setup
+           
+log "Iniciar o serviço.."
+sudo gvm-start
